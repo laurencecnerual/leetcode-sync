@@ -14756,7 +14756,7 @@ function addToSubmissions(params) {
     submissions,
   } = params;
 
-  for (const submission of response.data.data.submissionList.submissions) {
+  for (const submission of response.data.data.submissionList) {
     submissionTimestamp = Number(submission.timestamp);
     if (submissionTimestamp <= lastTimestamp) {
       return false;
