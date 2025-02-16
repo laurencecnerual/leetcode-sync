@@ -267,7 +267,11 @@ function addToSubmissions(params) {
     submissions,
   } = params;
 
-  for (const submission of response.data.submissionList.submissions) {
+  if (!response.data.data.submissionList.submissions) {
+    return true;
+  }
+
+  for (const submission of response.data.data.submissionList.submissions) {
     submissionTimestamp = Number(submission.timestamp);
     if (submissionTimestamp <= lastTimestamp) {
       return false;
@@ -428,7 +432,7 @@ async function sync(inputs) {
   let latestCommitSHA = commits.data[0].sha;
   let treeSHA = commits.data[0].commit.tree.sha;
   for (i = submissions.length - 1; i >= 0; i--) {
-    submission = await getInfo(
+    let submission = await getInfo(
       submissions[i],
       leetcodeSession,
       leetcodeCSRFToken
